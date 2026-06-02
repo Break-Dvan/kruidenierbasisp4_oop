@@ -64,4 +64,3 @@ function getFileExtension($name) {
     return ($n === false) ? '' : substr($name, $n+1);
 }
 ?>
-

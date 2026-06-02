@@ -131,10 +131,15 @@ input[type=submit]:hover {
 
 }*/
 /*login-scherm*/
+.login_error {
+    color: red;
+    font-style: italic;
+    text-align: center;
+    margin-top: 10px;
+}
 #login {
     display: flex;
     height: 300px;
-
 }
 #login > * {
     margin: auto;

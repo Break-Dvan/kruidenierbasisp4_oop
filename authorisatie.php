@@ -1,5 +1,5 @@
 <?php
-include("inc/header.php");
+include 'inc/init.php';
 
 if ($_POST['submit']) {
     $inlognaam=isset($_POST['inlognaam']) ? $_POST['inlognaam'] : '';
@@ -15,19 +15,15 @@ $oUser = new Gebruiker($dbconn);
 //$resultaat bepalen....
 $result = $oUser->getAuthorisation($inlognaam, $wachtwoord);
 
-if ($result) { //$result = true or false..
+if ($result) { //$result = true or false.
     $rol = $oUser->rol;
     $_SESSION['inlognaam'] = $inlognaam;
-    $_SESSION['wachtwoord'] = $wachtwoord;
     $_SESSION['rol'] = $rol;
     $_SESSION['ingelogd'] = true;
     header('refresh: 1; url=kassa.php');
     exit;
 } else {
-    echo 'Helaas, uw inlognaam en/of wachtwoord corresponderen niet met onze gegevens. U wordt
-            doorgestuurd...<br>';
-    session_destroy();
-    session_unset();
+        $_SESSION['error_inlog'] = 'Helaas, uw inlognaam en/of wachtwoord corresponderen niet met onze gegevens.<br>';
     header('refresh: 5; url=login.php');
     exit;
 }

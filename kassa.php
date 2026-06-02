@@ -1,4 +1,6 @@
 <?php
+// include init.php
+include 'inc/init.php';
 // include header.php
 include 'inc/header.php';
 // header tags toevoegen

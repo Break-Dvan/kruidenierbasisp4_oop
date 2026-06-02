@@ -1,5 +1,5 @@
 <?php
-// include header.php
+include 'inc/init.php';
 include 'inc/header.php';
 // header tags toevoegen
 echo '<header class="head">';

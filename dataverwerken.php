@@ -1,5 +1,6 @@
 <?php
-include 'inc/header.php';
+include 'inc/init.php';
+//include 'inc/header.php';
 // header tags toevoegen
 echo '<header class="head">';
 echo '<p>eventueel extra info</p>';
@@ -33,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $oDelProduct = new Product($dbconn);
                 $msg = $oDelProduct->deleteProduct($idProduct);
 //                echo $msg; => komt uit class...
-                echo 'Product ' . $artikelnr . ' is verwijderd...<br>';
+                //echo 'Product ' . $artikelnr . ' is verwijderd...<br>';
                 header('refresh: 1; url=voorraad.php');
             } else {
-                echo 'Product ' . $artikelnr . ' is niet verwijderd...<br>';
+                //echo 'Product ' . $artikelnr . ' is niet verwijderd...<br>';
                 header('refresh: 1; url=voorraad.php');
             }
             break;
@@ -64,12 +65,12 @@ function updateProductDetail()
     $result = $oUpdateProduct->updateProduct($id, $prijs, $aantal, $omschrijving, $leverancier, $artikelgroep);
     //(BkD 5-4-2024 16:27) let op: werkt nog niet. Wijzigt ALLE records en niet 1... class Product nakijken
     if ($result) {
-        echo "<p>Product {$omschrijving} ({$artikelnr} en id= {$id}) is aangepast</p><br>";
+        //echo "<p>Product {$omschrijving} ({$artikelnr} en id= {$id}) is aangepast</p><br>";
         header('refresh: 1; url=voorraad.php');
         exit();
     } else {
-        echo "<p>Product {$omschrijving} ({$artikelnr}) is NIET aangepast</p><br>
-                <br>";
+//        echo "<p>Product {$omschrijving} ({$artikelnr}) is NIET aangepast</p><br>
+//                <br>";
         header('refresh: 4; url=voorraad.php');
         exit();
     }
@@ -93,11 +94,11 @@ function newProduct()
 
     $result = $oNewProduct->insertProduct($artikelnr, $omschrijving, $leverancier, $artikelgroep, $eenheid, $prijs, $aantal);
     if ($result) {
-        echo "<p>Product {$omschrijving} is toegevoegd</p><br>";
+        //echo "<p>Product {$omschrijving} is toegevoegd</p><br>";
         header('refresh: 1; url=voorraad.php');
         exit();
     } else {
-        echo "<p>Product {$omschrijving} is NIET toegevoegd...</p><br>";
+        //echo "<p>Product {$omschrijving} is NIET toegevoegd...</p><br>";
         header('refresh: 10; url=voorraad.php');
         exit();
     }
