@@ -12,6 +12,7 @@ Na dit leerjaar ga je op stage. Deze opdracht is een voorbereiding daarop. Ook o
 Kortom, dit project bereid je voor op je stageperiode.
 ### Uitleg
 Deze applicatie bevat verschillende mappen. Het is belangrijk dat je deze structuur vast houdt. Dat heeft de volgende voordelen:
+
 - onderhoud maak je daardoor gemakkelijker
 - collega's snappen sneller jouw code
 - minder fouten/bugs
@@ -27,12 +28,13 @@ Deze applicatie bevat verschillende mappen. Het is belangrijk dat je deze struct
 	- pro: aparte map voor de csv-bestanden 
 	- root: php-bestanden voor de applicatie zelf
 #### Functionaliteit
-Zoals la benoemd is het een werkende applicatie. De volgende functionaliteiten zitten erin:
+Zoals al benoemd is het een werkende applicatie. De volgende functionaliteiten zitten erin:
+
 	- kassa werkt automatisch🤫
 	- import csv-bestanden werkt (procedureel)
 	- inloggen werkt (OOP)
-		- authenticatie werkt
-		- autorisatie werkt nog niet
-			- 'rollen' moet nog ingebouwd worden
+	- authenticatie werkt
+	- autorisatie werkt nog niet
+		- 'rollen' moet nog ingebouwd worden
 	- voorraad/producten werkt (OOP)
 Een goede basis dus om verder mee te gaan. Verwacht wordt dat je verder werkt volgens OOP.
