@@ -1,39 +1,42 @@
 <?php
 include 'inc/init.php';
-include 'inc/header.php';
-// header tags toevoegen
-echo '<header class="head">';
-
-echo '</header>'; //afsluiten header
-// voor gridopmaak alvast de main-content
-echo '<main class="main-content">';
-// FORM EDIT product...
-echo '<div id="frmDetail">';
+//controle of id is meegegeven
 if (isset($_GET["id"])) {
     $productId=$_GET["id"];
 }
 else {
-    echo 'Product niet gevonden...';
-    header('refresh: 2; url=voorraad.php');
+    $_SESSION['error_voorraad'] = "Product is niet gevonden...";
+    header('location: voorraad.php');
+    exit;
 }
+//ophalen en controleren gegeven voordat er output wordt gestuurd...
 $oProduct = new Product($dbconn);
 $result = $oProduct->getProductDetails($productId);
 if (!$result) {
-    echo 'Het ophalen van detailgegevens is niet goedgegaan. Raadpleeg uw beheerder!';
-    header('refresh: 2; url=voorraad.php');
+    $_SESSION['error_voorraad'] =  'Het ophalen van detailgegevens is niet goedgegaan. Raadpleeg uw beheerder!';
+    header('location: voorraad.php');
     exit();
 }
 $aantal = $result->rowCount();
 
 if($aantal>1) {
-    echo 'Er zijn meerdere producten geselecteerd. Dit gaat niet goed!';
-    header('refresh: 2; url=voorraad.php');
+    $_SESSION['error_voorraad'] =  'Er zijn meerdere producten geselecteerd. Dit gaat niet goed!';
+    header('location: voorraad.php');
     exit();
 } elseif ($aantal==0) {
-    echo 'Er is geen product geselecteerd. Dit gaat niet goed!';
-    header('refresh: 2; url=voorraad.php');
+    $_SESSION['error_voorraad'] =  'Er is geen product geselecteerd. Dit gaat niet goed!';
+    header('location: voorraad.php');
     exit();
 }
+include 'inc/header.php';
+// header tags toevoegen
+echo '<header class="head">';
+echo '</header>'; //afsluiten header
+// voor gridopmaak alvast de main-content
+echo '<main class="main-content">';
+// FORM EDIT product...
+echo '<div id="frmDetail">';
+
 //1 record...
 $product = $result->fetch(PDO::FETCH_ASSOC);
 $listArtikelgroep = $oProduct->getProductGroups($dbconn);

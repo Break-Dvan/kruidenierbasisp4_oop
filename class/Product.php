@@ -15,7 +15,6 @@ class Product {
             $stmt->bindParam(':start', $start, PDO::PARAM_INT);
             $stmt->bindParam(':iRecords', $iRecords, PDO::PARAM_INT);
             $stmt->execute();
-//            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $stmt;
         } catch (PDOException $e) {
             return 'FOUTJE: ' . $e;

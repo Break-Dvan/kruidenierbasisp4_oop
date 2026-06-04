@@ -7,13 +7,17 @@ echo '<header class="head">';
 echo "<a href='product_new.php' class='btn-new'><i class='material-icons md-24'>add</i></a>";
 echo "<a href='voorraad_import.php' class='btn-new'><i class='material-icons md-24'>file_upload</i></a>";
 
-
-//echo '<span class="material-icons-outlined">
-//import_export
-//</span> ';
 echo '</header>'; //afsluiten header
 // voor gridopmaak alvast de main-content
 echo '<main class="main-content">';
+if (isset($_SESSION['error_voorraad'])) {
+    echo $_SESSION['error_voorraad'];
+    unset($_SESSION['error_voorraad']);
+}
+if (isset($_SESSION['msg_voorraad'])) {
+    echo $_SESSION['msg_voorraad'];
+    unset($_SESSION['msg_voorraad']);
+}
 ?>
     <!-- tabelkop met Voorraad als HTML-->
     <table id="voorraad">
@@ -45,7 +49,6 @@ $total_pages = ceil($total_rows / RECORDS_PER_PAGE);
 // ophalen producten uit database
 $result = $oProduct->getProductPerPage($start_from, RECORDS_PER_PAGE);
 $aantal=$result->rowCount();
-//$aantal=$result->rowCount();
 $contentTable="";
 // tabel aanvullen met klantgegevens
 if ($aantal>0){ //controle of er wel wat opgehaald wordt...
@@ -77,9 +80,7 @@ echo $contentTable;
 $page_url="voorraad.php";
 include_once 'inc/paginering.php';
 
-
 // include footer
-//echo '</div>'; //frmDetail afsluiten
 echo '</main>'; //main afsluiten
 include ("inc/footer.php") ;
 ?>

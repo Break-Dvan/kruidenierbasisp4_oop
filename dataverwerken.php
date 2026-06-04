@@ -1,15 +1,5 @@
 <?php
 include 'inc/init.php';
-//include 'inc/header.php';
-// header tags toevoegen
-echo '<header class="head">';
-echo '<p>eventueel extra info</p>';
-echo '</header>'; //afsluiten header
-
-// voor gridopmaak alvast de main-content
-echo '<main class="main-content">';
-// Begin FORM
-//echo '<div id="frmDetail">';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -33,20 +23,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($delValue) {
                 $oDelProduct = new Product($dbconn);
                 $msg = $oDelProduct->deleteProduct($idProduct);
-//                echo $msg; => komt uit class...
-                //echo 'Product ' . $artikelnr . ' is verwijderd...<br>';
-                header('refresh: 1; url=voorraad.php');
+                header('location: voorraad.php');
             } else {
-                //echo 'Product ' . $artikelnr . ' is niet verwijderd...<br>';
-                header('refresh: 1; url=voorraad.php');
+                header('location: voorraad.php');
             }
             break;
         case "LEEG":
         default:
-            echo "geen geldige actie...";
+            $_SESSION['error_voorraad'] =  'Geen geldige actie';
+            header('location: voorraad.php');
+            exit;
     }
 } else {
-    header('url=index.php');
+    header('location: index.php');
 }
 function updateProductDetail()
 {
@@ -61,25 +50,20 @@ function updateProductDetail()
     $prijs = str_replace(",", ".", $prijs);
     $aantal = isset($_POST['aantal']) ? $_POST['aantal'] : "";
     $oUpdateProduct = new Product($dbconn);
-//    echo "Resultaat: {$id} {$prijs} {$aantal} {$omschrijving} {$leverancier} {$artikelgroep}";
     $result = $oUpdateProduct->updateProduct($id, $prijs, $aantal, $omschrijving, $leverancier, $artikelgroep);
-    //(BkD 5-4-2024 16:27) let op: werkt nog niet. Wijzigt ALLE records en niet 1... class Product nakijken
     if ($result) {
-        //echo "<p>Product {$omschrijving} ({$artikelnr} en id= {$id}) is aangepast</p><br>";
-        header('refresh: 1; url=voorraad.php');
+        $_SESSION['msg_voorraad'] = "Gegevens zijn bijgewerkt!";
+        header('location: voorraad.php');
         exit();
     } else {
-//        echo "<p>Product {$omschrijving} ({$artikelnr}) is NIET aangepast</p><br>
-//                <br>";
-        header('refresh: 4; url=voorraad.php');
+        $_SESSION['error_voorraad'] = "Gegevens zijn NIET bijgewerkt!";
+        header('location: voorraad.php');
         exit();
     }
 }
-
 //id, artikelnummer, omschrijving, leverancier, artikelgroep, eenheid, prijs, aantal FROM product
 function newProduct()
 {
-    //nog niet geregeld: controle of artikelnummer al bestaat... Zou wel moeten natuurlijk!!
     global $dbconn;
     $artikelnr = isset($_POST['artikelnummer']) ? addslashes($_POST['artikelnummer']) : "";
     $omschrijving = isset($_POST['omschrijving']) ? addslashes($_POST['omschrijving']) : "";
@@ -93,12 +77,13 @@ function newProduct()
 
     $result = $oNewProduct->insertProduct($artikelnr, $omschrijving, $leverancier, $artikelgroep, $eenheid, $prijs, $aantal);
     if ($result) {
-        //echo "<p>Product {$omschrijving} is toegevoegd</p><br>";
-        header('refresh: 1; url=voorraad.php');
+        $_SESSION['msg_voorraad'] = "Nieuw product is toegevoegd.";
+        header('location: voorraad.php');
         exit();
     } else {
         //echo "<p>Product {$omschrijving} is NIET toegevoegd...</p><br>";
-        header('refresh: 10; url=voorraad.php');
+        $_SESSION['error_voorraad'] = "Nieuw product is NIET toegevoegd...";
+        header('location: voorraad.php');
         exit();
     }
 }
@@ -117,7 +102,6 @@ function importCSV()
         $update = 0;
         $new = 0;
         while (!feof($importFile)) {
-
             //[0] => artikelnummer [1] => omschrijving [2] => leverancier
             //[3] => artikelgroep [4] => eenheid [5] => prijs [6] => aantal
             $record = fgetcsv($importFile, 255, ";");
@@ -152,13 +136,16 @@ function importCSV()
         $strMsg = '<p>Helaas, geen juist bestand</p>';
     }
     fclose($importFile);
+    include "inc/header.php";
+    echo '<main class="main-content">';
     echo $strMsg;
-}
 
+    echo '</main>'; //main afsluiten
+    include("inc/footer.php");
+}
 ?>
 
 <?php
 //echo '</div>'; //frmDetail afsluiten
-echo '</main>'; //main afsluiten 
-include("inc/footer.php");
+
 ?>

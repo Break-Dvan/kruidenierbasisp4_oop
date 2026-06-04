@@ -14,7 +14,7 @@ if (isset($_GET["id"])) {
 }
 else {
     echo 'Product niet gevonden...';
-    header('refresh: 2; url=voorraad.php');
+    header('location: voorraad.php');
     exit;
 }
 $delProduct = new Product($dbconn);
