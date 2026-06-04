@@ -1,4 +1,5 @@
 <?php
+include("inc/init.php");
 include("inc/header.php");
 
 $file=str_replace(dirname($_SERVER['PHP_SELF']),'',$_SERVER['PHP_SELF'] );

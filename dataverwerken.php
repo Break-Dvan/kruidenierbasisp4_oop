@@ -74,7 +74,6 @@ function updateProductDetail()
         header('refresh: 4; url=voorraad.php');
         exit();
     }
-
 }
 
 //id, artikelnummer, omschrijving, leverancier, artikelgroep, eenheid, prijs, aantal FROM product

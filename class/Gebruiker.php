@@ -36,7 +36,6 @@ class Gebruiker {
         }
         return $this->auth;
     }
-
 }
 
 
